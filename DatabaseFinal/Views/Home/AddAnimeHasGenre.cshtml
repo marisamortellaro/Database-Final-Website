@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewData["Title"] = "AddAnimeHasGenre";
+    var animeList = (List<Anime>)ViewData["animeNames"];
+    var genreList = (List<Genre>)ViewData["genreNames"];
+
+}
+
+<h2>Add Genre to an Anime</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="HandleNewAnimeHasGenre">
+            <div class="form-group">
+                <label for="AnimeId" class="control-label">Choose an Anime</label>
+                @Html.DropDownList("animeId", new SelectList(animeList, "Id", "Name"), "Select an Anime", new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <label for="GenreId" class="control-label">Choose a Genre</label>
+                @Html.DropDownList("genreId", new SelectList(genreList, "Id", "Name"), "Select a Genre", new { @class = "form-control" })
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Add a new Anime has Genre" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<h2>Anime and their Genres</h2>
+@foreach (Anime anime in animeList)
+{
+    <h4>@anime.Name</h4>
+    <table class="table">
+        <thead>
+            <tr>
+             
+                <th>
+                    Genre
+                </th>
+
+                <th>
+                    Description
+                </th>
+            </tr>
+        </thead>
+        @foreach (ShowHasGenre genre in anime.ShowHasGenres)
+        {
+            <tr>
+                <td>
+                   @genre.Genre.Name
+                </td>
+                <td>
+                    @genre.Genre.Description
+                </td>
+                
+            </tr>
+        }
+    </table>
+}
+
+
+    <style>
+
+
+        body {
+            background: url('http://colourlovers.com.s3.amazonaws.com/images/patterns/1620/1620154.png'), url('http://www.colourlovers.com/img/508F92/228/161/Elegant_Cyanide.png'), #cccccc;
+            _background: #e6ca6e; /*IE cheat code*/
+            background-size: auto 40px, auto 305px, auto auto;
+            background-position: 0px 0px, 0px 40px, 0px 0px;
+            background-repeat: repeat-x, repeat-x, repeat;
+        }

@@ -60,6 +60,7 @@ namespace DatabaseFinal.Controllers
             ViewData["animeNames"] = context.Animes.Include(Animes=> Animes.Seasons).ToList();
             return View();
         }
+        
         [HttpPost]
         public IActionResult HandleNewSeason(int animeID, int seasonNum, string description, int numEpisodes)
         {
@@ -69,6 +70,25 @@ namespace DatabaseFinal.Controllers
             context.SaveChanges();
 
             return RedirectToAction("AddSeason");
+        }
+        public IActionResult AddAnimeHasGenre()
+        {
+
+            ViewData["animeNames"] = context.Animes.Include(Animes => Animes.ShowHasGenres).ToList();
+            ViewData["genreNames"] = context.Genres.Include(Genres => Genres.ShowsHaveGenre).ToList();
+            return View();
+        }
+        [HttpPost]
+        public IActionResult HandleNewAnimeHasGenre(int animeID, int genreID)
+        {
+            Anime existingAnime = context.Animes.Where(location => location.Id == animeID).Single();
+            Genre existingGenre = context.Genres.Where(location => location.Id == genreID).Single();
+
+            ShowHasGenre newShowHasGenre = new ShowHasGenre() { Anime = existingAnime, Genre = existingGenre};
+            context.ShowsHaveGenres.Add(newShowHasGenre);
+            context.SaveChanges();
+
+            return RedirectToAction("AddAnimeHasGenre");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
