@@ -40,10 +40,23 @@ namespace DatabaseFinal.Controllers
 
             return RedirectToAction("AddAnime");
         }
+        public IActionResult AddGenre()
+        {
+            return View(context.Genres.ToList());
+        }
+        [HttpPost]
+        public IActionResult HandleNewGenre(string name, string description)
+        {
+            Genre newGenre = new Genre() { Name = name, Description = description };
+            context.Genres.Add(newGenre);
+            context.SaveChanges();
+
+            return RedirectToAction("AddGenre");
+        }
 
         public IActionResult AddSeason()
         {
-            //var allAnime = context.Animes.Include(anime => anime.Name).ToList();
+           
             ViewData["animeNames"] = context.Animes.Include(Animes=> Animes.Seasons).ToList();
             return View();
         }

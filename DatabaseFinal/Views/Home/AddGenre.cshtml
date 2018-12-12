@@ -1,0 +1,55 @@
+﻿@model List<Genre>
+@{
+    ViewData["Title"] = "Add Genre";
+}
+
+<h2>AddGenre</h2>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="HandleNewGenre">
+            <div class="form-group">
+                <label for="name" class="control-label">Name of Genre</label>
+                <input name="name" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="description" class="control-label">Description of Genre</label>
+                <input name="description" class="form-control" />
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Add a new Genre" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<h2>Genres</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Genre
+            </th>
+            <th>
+                Description
+            </th>
+            
+        </tr>
+    </thead>
+    @foreach (Genre location in Model)
+    {
+        <tr>
+            <td>
+                @location.Name
+            </td>
+            <td>
+                @location.Description
+            </td>
+          
+        </tr>
+    }
+</table>
+
